@@ -1,0 +1,35 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #777;
+}
+
+header a {
+  color: #ff2125;
+}
+
+header {
+  position: absolute;
+  background-color: #555;
+}
+
+#submit-data {
+  width: fit-content;
+  height: 20px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  background-color: #000;
+}
+
+footer p {
+  text-align: center;
+  font: sans-serif ;
+  font-size: 1.1em;
+  color: #999;
+}
+

@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= title
+  h2= my_todos
+
+block addtask
+  input#input-name(type="text", placeholder="Your name")
+  input#input-task(type="text", placeholder="Your task")
+  button#submit-data(type="button")= addBtn
+
+block finduser
+  input#search-name(type="text", placeholder="Find user by name")
+  button#search(type="button")= findBtn
+
+block deleteuser
+  button#submit-data(type="button")= deleteBtn
+
+block items
+  h2= itemshead
+
+block status
+  h2= status
+
+block foot
+  p= author
