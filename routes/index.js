@@ -17,24 +17,31 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get("/user/:id", function(res, req, next) {
-    const usr = req.params.id;
+router.get("/user/:id", function(req, res, next) {
+    try {
+        const usr = req.params.id;
 
-    console.log(req.params);
-    console.log(req.params.id);
+        console.log("params: ", req.params);
+        console.log("Params ID: ", req.params.id);
 
-    // Send back the information of corresponding user to the client
-    if (db.hasOwnProperty(usr)) {
-        res.status(200).json({ user: usr, tasks: db[usr].tasks });
-    } else {
-        res.status(200).json({ msg: "User not found" });
+        // Send back the information of corresponding user to the client
+        if (db.hasOwnProperty(usr)) {
+            console.log(`User '${usr}' found.`);
+            res.status(200).json({ user: usr, tasks: db[usr].tasks });
+        } else {
+            console.log(`User '${usr}' NOT found.`);
+            res.status(200).json({ msg: "User not found" });
+        }
+
+        console.log({
+            user: usr,
+            tasks: db[usr].tasks
+        });
+    } catch (error) {
+        console.error("Error fetching user: ", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-
-    console.log({
-        user: usr,
-        tasks: db[usr].tasks
-    });
-
+    next();
 });
 
 router.post("/todo", function(req, res, next) {

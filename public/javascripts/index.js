@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     searchBtn.addEventListener("click", async () => {
         const name = searchName.value;
-        console.log(name);
+        console.log("NAME TO SEARCH FOR: ", name);
         try {
             const res = await fetch(`/user/${name}`, {
                 method: "GET",
