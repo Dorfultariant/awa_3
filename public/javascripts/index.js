@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchBtn = document.getElementById("search");
     const itemList = document.getElementById("itemlist");
 
+    const deleteBtn = document.getElementById("delete-user");
+
     submitBtn.addEventListener('click', async () => {
         const name = inputName.value;
         const task = inputTask.value;
@@ -46,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     searchBtn.addEventListener("click", async () => {
         const name = searchName.value;
-        console.log("NAME TO SEARCH FOR: ", name);
         try {
             const res = await fetch(`/user/${name}`, {
                 method: "GET",
@@ -63,6 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const nameHead = document.createElement("h3");
                 if (data.msg) {
+                    // Delete button should not show for user that does not exist.
+                    deleteBtn.style.display = "none";
+
                     // Username header
                     nameHead.textContent = "User not found";
                     const parag = document.createElement("p");
@@ -71,6 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
 
                     nameHead.textContent = data.user;
+
+                    // Show delete button once it is established that user exists in the db
+                    deleteBtn.style.display = "block";
 
                     if (data.tasks) {
                         // Show all the tasks
@@ -81,8 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     }
 
-
-                    // Show button to delete corresponding user
                 }
                 itemList.appendChild(nameHead);
 
@@ -92,6 +97,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         catch (error) {
             console.log(error);
+        }
+    });
+
+    deleteBtn.addEventListener("click", async () => {
+
+        try {
+            const usr = searchName.value;
+
+            const res = await fetch(`/user/${usr}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                console.log("Status of request: ", data);
+            }
+
+        } catch (error) {
+            console.error("Error produced while deleting user:", error);
+
         }
     });
 

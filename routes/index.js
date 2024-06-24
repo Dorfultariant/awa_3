@@ -21,22 +21,42 @@ router.get("/user/:id", function(req, res, next) {
     try {
         const usr = req.params.id;
 
-        console.log("params: ", req.params);
-        console.log("Params ID: ", req.params.id);
-
         // Send back the information of corresponding user to the client
         if (db.hasOwnProperty(usr)) {
             console.log(`User '${usr}' found.`);
             res.status(200).json({ user: usr, tasks: db[usr].tasks });
         } else {
             console.log(`User '${usr}' NOT found.`);
+
             res.status(200).json({ msg: "User not found" });
         }
+    } catch (error) {
+        console.error("Error fetching user: ", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+    next();
+});
 
-        console.log({
-            user: usr,
-            tasks: db[usr].tasks
-        });
+
+
+router.delete("/user/:id", function(req, res, next) {
+    try {
+        // Get the user name
+        const usr = req.params.id;
+
+        // Send back the information of corresponding user to the client
+        if (db.hasOwnProperty(usr)) {
+            // Debugging
+            console.log(`User '${usr}' found.`);
+
+            // Remove user from db
+            delete db[usr];
+            res.status(200).json({ msg: "User deleted" });
+        } else {
+            console.log(`User '${usr}' NOT found.`);
+            res.status(200).json({ msg: "User not found" });
+        }
+        console.log("DB: ", db);
     } catch (error) {
         console.error("Error fetching user: ", error);
         res.status(500).json({ error: "Internal Server Error" });

@@ -18,6 +18,10 @@ header {
   height: 20px;
 }
 
+#delete-user {
+  display: none;
+}
+
 footer {
   position: absolute;
   bottom: 0;
@@ -32,4 +36,3 @@ footer p {
   font-size: 1.1em;
   color: #999;
 }
-
